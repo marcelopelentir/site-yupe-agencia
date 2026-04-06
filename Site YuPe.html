@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YuPe Agência — Sites Profissionais</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===================== RESET & VARIABLES ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:    #78c0a8;
+      --green-dark: #5aaa90;
+      --navy:     #0b3c5d;
+      --navy-mid: #0d4e7a;
+      --bg:       #f5f5f5;
+      --white:    #ffffff;
+      --text:     #1a1a2e;
+      --muted:    #6b7280;
+      --border:   rgba(11,60,93,0.10);
+
+      --font-display: 'Open Sans', sans-serif;
+      --font-body:    'Montserrat', sans-serif;
+
+      --radius:   16px;
+      --shadow:   0 4px 24px rgba(11,60,93,0.10);
+      --shadow-lg:0 12px 48px rgba(11,60,93,0.16);
+      --transition: 0.28s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ===================== SCROLLBAR ===================== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
+
+    /* ===================== UTILITY ===================== */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section    { padding: 100px 0; }
+    .section-alt { background: var(--white); }
+
+    .tag {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green-dark);
+      background: rgba(120,192,168,0.13);
+      border: 1px solid rgba(120,192,168,0.35);
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+    }
+
+    h2.section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.9rem);
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 56px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(120,192,168,0.40);
+    }
+    .btn-primary:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(120,192,168,0.50);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+    }
+    .btn-outline:hover {
+      background: var(--navy);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline-light {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.6);
+    }
+    .btn-outline-light:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: var(--white);
+    }
+
+    /* ===================== NAVBAR ===================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      padding: 0;
+      transition: var(--transition);
+    }
+
+    nav.scrolled {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(11,60,93,0.10);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: color var(--transition);
+    }
+    nav.scrolled .nav-logo { color: var(--navy); }
+
+    .nav-logo span { color: var(--green); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    nav.scrolled .nav-links a { color: var(--muted); }
+    .nav-links a:hover,
+    nav.scrolled .nav-links a:hover { color: var(--green-dark); }
+
+    .nav-cta {
+      background: var(--green) !important;
+      color: var(--white) !important;
+      padding: 10px 22px !important;
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem !important;
+    }
+    .nav-cta:hover { background: var(--green-dark) !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    nav.scrolled .hamburger span { background: var(--navy); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px; left: 0; right: 0;
+      background: var(--white);
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+      z-index: 998;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .mobile-menu a { font-weight: 500; color: var(--navy); text-decoration: none; font-size: 1rem; }
+    .mobile-menu a:hover { color: var(--green-dark); }
+    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 8px; }
+
+    /* ===================== HERO ===================== */
+    #hero {
+      min-height: 100vh;
+      background: var(--navy);
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero-mesh {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-mesh::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(120,192,168,0.18) 0%, transparent 70%);
+      top: -200px; right: -200px;
+      border-radius: 50%;
+    }
+    .hero-mesh::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(120,192,168,0.10) 0%, transparent 70%);
+      bottom: -100px; left: -100px;
+      border-radius: 50%;
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(120,192,168,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120,192,168,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(120,192,168,0.15);
+      border: 1px solid rgba(120,192,168,0.30);
+      color: var(--green);
+      padding: 7px 16px;
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      font-family: var(--font-display);
+    }
+    .hero-badge::before { content: '●'; font-size: 0.5rem; animation: pulse-dot 2s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--green);
+      position: relative;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 44px;
+      max-width: 580px;
+      line-height: 1.7;
+    }
+
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      flex-wrap: wrap;
+    }
+    .stat-item { }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.50);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ===================== SOBRE ===================== */
+    #sobre .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .sobre-visual {
+      position: relative;
+    }
+    .sobre-card {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 48px 40px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .sobre-card::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(120,192,168,0.20) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .sobre-card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .sobre-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .sobre-card p { color: rgba(255,255,255,0.65); font-size: 0.95rem; }
+
+    .sobre-float {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      background: var(--green);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .sobre-float span {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: 800;
+    }
+
+    /* ===================== SERVIÇOS ===================== */
+    #servicos .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--green);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .service-card:hover::after { transform: scaleX(1); }
+
+    .service-icon {
+      width: 56px; height: 56px;
+      background: rgba(120,192,168,0.12);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 24px;
+    }
+    .service-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .service-card p { font-size: 0.93rem; color: var(--muted); line-height: 1.6; }
+
+    /* ===================== PLANOS ===================== */
+    #planos { background: var(--navy); }
+    #planos .tag { color: var(--green); background: rgba(120,192,168,0.12); border-color: rgba(120,192,168,0.25); }
+    #planos h2.section-title { color: var(--white); }
+    #planos .section-sub { color: rgba(255,255,255,0.55); }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .plan-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .plan-card:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-4px);
+    }
+    .plan-card.featured {
+      background: var(--white);
+      border-color: var(--green);
+      box-shadow: 0 0 0 2px var(--green), var(--shadow-lg);
+      transform: scale(1.02);
+    }
+    .plan-card.featured:hover { transform: scale(1.02) translateY(-4px); }
+
+    .plan-badge {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: var(--green);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-family: var(--font-display);
+    }
+
+    .plan-name {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+    .plan-card.featured .plan-name { color: var(--green-dark); }
+
+    .plan-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .plan-card.featured .plan-title { color: var(--navy); }
+
+    .plan-price {
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .plan-card.featured .plan-price { border-bottom-color: var(--border); }
+
+    .plan-price-main {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+    .plan-card.featured .plan-price-main { color: var(--navy); }
+
+    .plan-price-detail {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 4px;
+    }
+    .plan-card.featured .plan-price-detail { color: var(--muted); }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .plan-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.70);
+    }
+    .plan-card.featured .plan-features li { color: var(--text); }
+    .plan-features li::before {
+      content: '✓';
+      width: 20px; height: 20px;
+      background: rgba(120,192,168,0.15);
+      color: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .plan-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%;
+      padding: 15px;
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition);
+      border: 2px solid rgba(255,255,255,0.20);
+      color: var(--white);
+      cursor: pointer;
+      background: transparent;
+    }
+    .plan-btn:hover {
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.40);
+    }
+    .plan-card.featured .plan-btn {
+      background: var(--green);
+      border-color: var(--green);
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(120,192,168,0.40);
+    }
+    .plan-card.featured .plan-btn:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+    }
+
+    /* ===================== DIFERENCIAIS ===================== */
+    #diferenciais .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+    }
+
+    .diff-item {
+      text-align: center;
+      padding: 36px 20px;
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .diff-item:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+
+    .diff-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .diff-item h4 {
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* ===================== COMO FUNCIONA ===================== */
+    #como-funciona { background: var(--bg); }
+
+    .steps-wrap {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .steps-wrap::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: 60px; right: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green) 0%, rgba(120,192,168,0.2) 100%);
+      z-index: 0;
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 0 12px;
+    }
+
+    .step-num {
+      width: 72px; height: 72px;
+      background: var(--white);
+      border: 3px solid var(--green);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin: 0 auto 20px;
+      transition: var(--transition);
+      box-shadow: 0 0 0 6px var(--bg);
+    }
+    .step:hover .step-num {
+      background: var(--green);
+      color: var(--white);
+      transform: scale(1.1);
+    }
+
+    .step h4 {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .step p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+    /* ===================== FAQ ===================== */
+    #faq { background: var(--white); }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .faq-item.open { box-shadow: var(--shadow); border-color: var(--green); }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      transition: var(--transition);
+    }
+    .faq-q:hover { color: var(--green-dark); }
+
+    .faq-arrow {
+      width: 28px; height: 28px;
+      background: rgba(120,192,168,0.12);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform var(--transition), background var(--transition);
+    }
+    .faq-item.open .faq-arrow {
+      transform: rotate(180deg);
+      background: var(--green);
+    }
+    .faq-arrow svg { width: 14px; height: 14px; }
+    .faq-item.open .faq-arrow svg path { stroke: var(--white); }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(.4,0,.2,1), padding 0.3s;
+    }
+    .faq-a-inner {
+      padding: 0 24px 22px;
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-a { max-height: 200px; }
+
+    /* ===================== CTA FINAL ===================== */
+    #cta {
+      background: linear-gradient(135deg, var(--navy) 0%, #0d4e7a 60%, #0b3c5d 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #cta::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(120,192,168,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .cta-inner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .cta-inner p {
+      color: rgba(255,255,255,0.60);
+      font-size: 1.05rem;
+      margin-bottom: 40px;
+    }
+    .cta-btn-big {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--green);
+      color: var(--white);
+      padding: 18px 40px;
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: 0 8px 32px rgba(120,192,168,0.40);
+    }
+    .cta-btn-big:hover {
+      background: var(--green-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px rgba(120,192,168,0.50);
+    }
+
+    /* ===================== FOOTER ===================== */
+    footer {
+      background: #070f1a;
+      padding: 40px 0;
+      text-align: center;
+    }
+    footer .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    footer .footer-logo span { color: var(--green); }
+    footer p { color: rgba(255,255,255,0.30); font-size: 0.82rem; }
+
+    /* ===================== WHATSAPP FLOAT ===================== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 9999;
+      width: 58px; height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.50);
+      text-decoration: none;
+      transition: var(--transition);
+      animation: float-wa 3s ease-in-out infinite;
+    }
+    .whatsapp-float:hover { transform: scale(1.12); box-shadow: 0 10px 32px rgba(37,211,102,0.60); }
+    .whatsapp-float svg { width: 30px; height: 30px; }
+
+    @keyframes float-wa {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-6px); }
+    }
+    .whatsapp-float:hover { animation: none; }
+
+    .wa-pulse {
+      position: absolute;
+      inset: -6px;
+      border: 2px solid rgba(37,211,102,0.40);
+      border-radius: 50%;
+      animation: wa-ring 2.5s ease-out infinite;
+    }
+    @keyframes wa-ring {
+      0%   { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    /* ===================== ANIMATIONS ===================== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+    /* ===================== RESPONSIVE ===================== */
+    @media (max-width: 1024px) {
+      .sobre-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+      .diff-grid { grid-template-columns: repeat(3, 1fr) !important; }
+      .steps-wrap { grid-template-columns: repeat(3, 1fr) !important; gap: 24px !important; }
+      .steps-wrap::before { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .section { padding: 72px 0; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      #servicos .cards-grid { grid-template-columns: 1fr !important; }
+      .plans-grid { grid-template-columns: 1fr !important; }
+      .plan-card.featured { transform: none; }
+      .diff-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .steps-wrap { grid-template-columns: 1fr !important; }
+      .faq-grid { grid-template-columns: 1fr !important; }
+      .hero-stats { gap: 24px; }
+      .sobre-float { position: static; margin-top: 20px; display: inline-block; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-btns { flex-direction: column; }
+      .hero-btns .btn { justify-content: center; }
+      .diff-grid { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVBAR ==================== -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#hero" class="nav-logo">YuPe <span>Agência</span></a>
+        <ul class="nav-links">
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#planos">Planos</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="https://wa.me/41995107048" target="_blank" class="nav-cta">Falar Agora</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#sobre" onclick="closeMobile()">Sobre</a></li>
+      <li><a href="#servicos" onclick="closeMobile()">Serviços</a></li>
+      <li><a href="#planos" onclick="closeMobile()">Planos</a></li>
+      <li><a href="#faq" onclick="closeMobile()">FAQ</a></li>
+    </ul>
+    <a href="https://wa.me/41995107048" target="_blank" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">💬 Falar no WhatsApp</a>
+  </div>
+
+  <!-- ==================== HERO ==================== -->
+  <section id="hero">
+    <div class="hero-mesh"></div>
+    <div class="hero-grid"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">🚀 YuPe Agência</div>
+        <h1 class="hero-title">
+          Criação de Sites que<br /><em>Geram Clientes</em>
+        </h1>
+        <p class="hero-sub">
+          Landing Pages, Sites completos e E-commerces prontos para vender — rápido, estratégico e sem complicação.
+        </p>
+        <div class="hero-btns">
+          <a href="https://wa.me/41995107048" target="_blank" class="btn btn-primary">🚀 Solicitar Orçamento</a>
+          <a href="#planos" class="btn btn-outline-light">👀 Ver Planos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SOBRE ==================== -->
+  <section id="sobre" class="section section-alt">
+    <div class="container">
+      <div class="sobre-grid">
+        <div>
+          <div class="tag">Sobre a Agência</div>
+          <h2 class="section-title">Presença digital que<br />gera resultado real</h2>
+          <p style="color:var(--muted);margin-bottom:24px;font-size:1.02rem;line-height:1.75;">
+            Somos uma agência focada em criação de sites estratégicos, com foco em resultado. Desenvolvemos Landing Pages, sites completos e estruturamos e-commerces na Nuvemshop para empresas que querem crescer no digital de forma profissional.
+          </p>
+          <p style="color:var(--muted);font-size:1.02rem;line-height:1.75;">
+            Cada projeto é tratado de forma personalizada, do briefing ao lançamento, com suporte direto e sem intermediários.
+          </p>
+          <a href="https://wa.me/41995107048" target="_blank" class="btn btn-primary" style="margin-top:32px;">Falar com a equipe</a>
+        </div>
+        <div class="sobre-visual fade-up">
+          <div class="sobre-card">
+            <div class="sobre-card-icon">💡</div>
+            <h3>Estratégia + Design + Código</h3>
+            <p>Não entregamos apenas um site bonito. Entregamos uma ferramenta de vendas pensada para o seu negócio, com estratégia de conversão desde o primeiro pixel.</p>
+          </div>
+          <div class="sobre-float">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVIÇOS ==================== -->
+  <section id="servicos" class="section">
+    <div class="container">
+      <div class="tag">O que fazemos</div>
+      <h2 class="section-title">Nossos Serviços</h2>
+      <p class="section-sub">Soluções digitais pensadas para cada momento da sua jornada no digital.</p>
+
+      <div class="cards-grid">
+        <div class="service-card fade-up">
+          <div class="service-icon">⚡</div>
+          <h3>Landing Page</h3>
+          <p>Página única focada em conversão, ideal para quem quer validar e começar rápido. Pronta em poucos dias, com tudo que você precisa para captar clientes.</p>
+        </div>
+        <div class="service-card fade-up delay-1">
+          <div class="service-icon">🏢</div>
+          <h3>Site Completo</h3>
+          <p>Estrutura profissional com múltiplas páginas para empresas que querem presença forte e autoridade no digital. Design personalizado do zero.</p>
+        </div>
+        <div class="service-card fade-up delay-2">
+          <div class="service-icon">🛒</div>
+          <h3>E-commerce (Nuvemshop)</h3>
+          <p>Criação e estruturação de lojas virtuais prontas para vender. Configuração completa, produtos, meios de pagamento e muito mais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PLANOS ==================== -->
+  <section id="planos" class="section">
+    <div class="container">
+      <div class="tag">Investimento</div>
+      <h2 class="section-title">Escolha seu plano</h2>
+      <p class="section-sub">Planos flexíveis para empresas de todos os tamanhos. Sem surpresas, sem letras miúdas.</p>
+
+      <div class="plans-grid">
+        <!-- START -->
+        <div class="plan-card fade-up">
+          <div class="plan-name">START</div>
+          <div class="plan-title">Landing Page</div>
+          <div class="plan-price">
+            <div class="plan-price-main">R$ 797</div>
+            <div class="plan-price-detail">até R$ 997 — pagamento único</div>
+          </div>
+          <ul class="plan-features">
+            <li>1 página estratégica</li>
+            <li>100% responsivo</li>
+            <li>Botão WhatsApp integrado</li>
+            <li>Domínio incluso</li>
+            <li>Entrega em 2 a 5 dias úteis</li>
+          </ul>
+          <a href="https://wa.me/41995107048?text=Olá! Tenho interesse no plano START." target="_blank" class="plan-btn">Quero esse plano</a>
+        </div>
+
+        <!-- PRO -->
+        <div class="plan-card featured fade-up delay-1">
+          <div class="plan-badge">Mais popular</div>
+          <div class="plan-name">PRO</div>
+          <div class="plan-title">Site Completo</div>
+          <div class="plan-price">
+            <div class="plan-price-main">R$ 1.497</div>
+            <div class="plan-price-detail">a partir de — pagamento único</div>
+          </div>
+          <ul class="plan-features">
+            <li>Múltiplas páginas</li>
+            <li>Estrutura completa</li>
+            <li>Design personalizado</li>
+            <li>100% responsivo</li>
+            <li>Entrega em 7 a 15 dias úteis</li>
+          </ul>
+          <a href="https://wa.me/41995107048?text=Olá! Tenho interesse no plano PRO." target="_blank" class="plan-btn">Quero esse plano</a>
+        </div>
+
+        <!-- PRO+ -->
+        <div class="plan-card fade-up delay-2">
+          <div class="plan-name">PRO+</div>
+          <div class="plan-title">Site + Gestão</div>
+          <div class="plan-price">
+            <div class="plan-price-main">R$ 1.497</div>
+            <div class="plan-price-detail"> + R$ 199/mês</div>
+          </div>
+          <ul class="plan-features">
+            <li>Tudo do plano PRO</li>
+            <li>Manutenção mensal</li>
+            <li>Suporte prioritário</li>
+            <li>Backup + segurança</li>
+            <li>Domínio incluso</li>
+          </ul>
+          <a href="https://wa.me/41995107048?text=Olá! Tenho interesse no plano PRO+." target="_blank" class="plan-btn">Quero esse plano</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DIFERENCIAIS ==================== -->
+  <section id="diferenciais" class="section section-alt">
+    <div class="container">
+      <div class="tag">Por que a gente</div>
+      <h2 class="section-title">Nossos Diferenciais</h2>
+      <p class="section-sub">Mais do que entregar sites — entregamos resultados.</p>
+
+      <div class="diff-grid">
+        <div class="diff-item fade-up">
+          <span class="diff-icon">⚡</span>
+          <h4>Entrega Rápida</h4>
+        </div>
+        <div class="diff-item fade-up delay-1">
+          <span class="diff-icon">📱</span>
+          <h4>100% Responsivo</h4>
+        </div>
+        <div class="diff-item fade-up delay-2">
+          <span class="diff-icon">🎯</span>
+          <h4>Foco em Conversão</h4>
+        </div>
+        <div class="diff-item fade-up delay-3">
+          <span class="diff-icon">🤝</span>
+          <h4>Suporte Direto</h4>
+        </div>
+        <div class="diff-item fade-up delay-4">
+          <span class="diff-icon">🔒</span>
+          <h4>Segurança e Estabilidade</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== COMO FUNCIONA ==================== -->
+  <section id="como-funciona" class="section">
+    <div class="container">
+      <div class="tag">Processo</div>
+      <h2 class="section-title">Como Funciona</h2>
+      <p class="section-sub">Do primeiro contato ao site no ar, com total transparência em cada etapa.</p>
+
+      <div class="steps-wrap">
+        <div class="step fade-up">
+          <div class="step-num">1</div>
+          <h4>Você entra em contato</h4>
+          <p>Fale com a gente pelo WhatsApp e conte sobre o seu projeto.</p>
+        </div>
+        <div class="step fade-up delay-1">
+          <div class="step-num">2</div>
+          <h4>Entendemos seu objetivo</h4>
+          <p>Fazemos um briefing completo para entender sua empresa e metas.</p>
+        </div>
+        <div class="step fade-up delay-2">
+          <div class="step-num">3</div>
+          <h4>Criamos o layout</h4>
+          <p>Desenvolvemos o design personalizado para aprovação.</p>
+        </div>
+        <div class="step fade-up delay-3">
+          <div class="step-num">4</div>
+          <h4>Desenvolvemos o site</h4>
+          <p>Codificamos tudo com qualidade e responsividade.</p>
+        </div>
+        <div class="step fade-up delay-4">
+          <div class="step-num">5</div>
+          <h4>Publicamos no ar</h4>
+          <p>Seu site vai ao ar e começa a trabalhar por você.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section id="faq" class="section section-alt">
+    <div class="container">
+      <div class="tag">Dúvidas</div>
+      <h2 class="section-title">Perguntas Frequentes</h2>
+      <p class="section-sub">Tudo que você precisa saber antes de começar.</p>
+
+      <div class="faq-grid">
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Em quanto tempo meu site fica pronto?
+            <span class="faq-arrow">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Landing Page: de 2 a 5 dias úteis. Site completo: de 7 a 15 dias úteis. O prazo começa a contar após o briefing e aprovação do layout.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            O domínio está incluso?
+            <span class="faq-arrow">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Sim! O domínio está incluso no plano START (Landing Page) e no plano PRO+ (com gestão mensal). Para o plano PRO, o domínio pode ser incluído mediante consulta.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Posso pedir alterações?
+            <span class="faq-arrow">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Sim. Alterações pontuais após a entrega são cobradas à parte. Clientes do plano PRO+ têm alterações inclusas no valor da gestão mensal, sem custo adicional.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Vocês fazem loja virtual?
+            <span class="faq-arrow">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Sim! Trabalhamos com a Nuvemshop para criação e estruturação de lojas virtuais completas, com configuração de produtos, meios de pagamento e personalização do layout.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Preciso pagar mensalidade?
+            <span class="faq-arrow">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Não é obrigatório. A mensalidade de R$ 199/mês existe apenas no plano PRO+, que inclui manutenção, suporte, backup e segurança. Os planos START e PRO são pagamento único.</div></div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Como é feito o pagamento?
+            <span class="faq-arrow">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">Aceitamos Pix, Boleto e parcelamento no cartão (consulte condições). Trabalhamos com 50% de entrada e 50% na entrega do site.</div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA FINAL ==================== -->
+  <section id="cta" class="section">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="tag" style="color:var(--green);">Vamos começar?</div>
+        <h2>Pronto para ter um site profissional?</h2>
+        <p>Fale com a gente agora e comece seu projeto hoje mesmo. Atendimento ágil, sem enrolação.</p>
+        <a href="https://wa.me/41995107048" target="_blank" class="cta-btn-big">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.003 2C6.485 2 2.003 6.483 2.003 12c0 1.848.49 3.61 1.37 5.139L2 22l4.979-1.35A9.954 9.954 0 0012.003 22c5.514 0 9.997-4.483 9.997-10S17.517 2 12.003 2zm0 18.077a8.02 8.02 0 01-4.115-1.135l-.296-.175-3.01.815.82-2.974-.193-.307A8.036 8.036 0 013.98 12c0-4.428 3.601-8.03 8.022-8.03 4.42 0 8.022 3.602 8.022 8.03 0 4.428-3.602 8.077-8.021 8.077z"/></svg>
+          👉 Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">YuPe <span>Agência</span></div>
+      <p>© 2026 YuPe Agência. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== WHATSAPP FLOAT ==================== -->
+  <a href="https://wa.me/41995107048" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+    <div class="wa-pulse"></div>
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.003 2C6.485 2 2.003 6.483 2.003 12c0 1.848.49 3.61 1.37 5.139L2 22l4.979-1.35A9.954 9.954 0 0012.003 22c5.514 0 9.997-4.483 9.997-10S17.517 2 12.003 2zm0 18.077a8.02 8.02 0 01-4.115-1.135l-.296-.175-3.01.815.82-2.974-.193-.307A8.036 8.036 0 013.98 12c0-4.428 3.601-8.03 8.022-8.03 4.42 0 8.022 3.602 8.022 8.03 0 4.428-3.602 8.077-8.021 8.077z"/></svg>
+  </a>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+    /* --- Navbar scroll --- */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    /* --- Mobile menu --- */
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMobile() { mobileMenu.classList.remove('open'); }
+
+    /* --- FAQ accordion --- */
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      // Toggle clicked
+      if (!isOpen) item.classList.add('open');
+    }
+
+    /* --- Scroll animations --- */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    /* --- Smooth anchor scroll with offset for fixed nav --- */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        const offset = 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+        closeMobile();
+      });
+    });
+  </script>
+</body>
+</html>
