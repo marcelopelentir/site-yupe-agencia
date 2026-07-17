@@ -1,1297 +1,700 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YuPe Agência — Sites Profissionais</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
-
-  <style>
-    /* ===================== RESET & VARIABLES ===================== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --green:    #78c0a8;
-      --green-dark: #5aaa90;
-      --navy:     #0b3c5d;
-      --navy-mid: #0d4e7a;
-      --bg:       #f5f5f5;
-      --white:    #ffffff;
-      --text:     #1a1a2e;
-      --muted:    #6b7280;
-      --border:   rgba(11,60,93,0.10);
-
-      --font-display: 'Open Sans', sans-serif;
-      --font-body:    'Montserrat', sans-serif;
-
-      --radius:   16px;
-      --shadow:   0 4px 24px rgba(11,60,93,0.10);
-      --shadow-lg:0 12px 48px rgba(11,60,93,0.16);
-      --transition: 0.28s cubic-bezier(.4,0,.2,1);
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-
-    /* ===================== SCROLLBAR ===================== */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--green); border-radius: 3px; }
-
-    /* ===================== UTILITY ===================== */
-    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-    .section    { padding: 100px 0; }
-    .section-alt { background: var(--white); }
-
-    .tag {
-      display: inline-block;
-      font-family: var(--font-display);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--green-dark);
-      background: rgba(120,192,168,0.13);
-      border: 1px solid rgba(120,192,168,0.35);
-      padding: 5px 14px;
-      border-radius: 100px;
-      margin-bottom: 18px;
-    }
-
-    h2.section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 2.9rem);
-      font-weight: 800;
-      color: var(--navy);
-      line-height: 1.15;
-      margin-bottom: 16px;
-    }
-
-    .section-sub {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 520px;
-      margin-bottom: 56px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      border-radius: 100px;
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-weight: 700;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      transition: var(--transition);
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: var(--green);
-      color: var(--white);
-      box-shadow: 0 4px 20px rgba(120,192,168,0.40);
-    }
-    .btn-primary:hover {
-      background: var(--green-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(120,192,168,0.50);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--navy);
-      border: 2px solid var(--navy);
-    }
-    .btn-outline:hover {
-      background: var(--navy);
-      color: var(--white);
-      transform: translateY(-2px);
-    }
-
-    .btn-outline-light {
-      background: transparent;
-      color: var(--white);
-      border: 2px solid rgba(255,255,255,0.6);
-    }
-    .btn-outline-light:hover {
-      background: rgba(255,255,255,0.12);
-      border-color: var(--white);
-    }
-
-    /* ===================== NAVBAR ===================== */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 999;
-      padding: 0;
-      transition: var(--transition);
-    }
-
-    nav.scrolled {
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 2px 20px rgba(11,60,93,0.10);
-    }
-
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 70px;
-    }
-
-    .nav-logo {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--white);
-      text-decoration: none;
-      letter-spacing: -0.01em;
-      transition: color var(--transition);
-    }
-    nav.scrolled .nav-logo { color: var(--navy); }
-
-    .nav-logo span { color: var(--green); }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.85);
-      text-decoration: none;
-      transition: color var(--transition);
-    }
-    nav.scrolled .nav-links a { color: var(--muted); }
-    .nav-links a:hover,
-    nav.scrolled .nav-links a:hover { color: var(--green-dark); }
-
-    .nav-cta {
-      background: var(--green) !important;
-      color: var(--white) !important;
-      padding: 10px 22px !important;
-      border-radius: 100px;
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.9rem !important;
-    }
-    .nav-cta:hover { background: var(--green-dark) !important; }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 4px;
-    }
-    .hamburger span {
-      display: block;
-      width: 24px; height: 2px;
-      background: var(--white);
-      border-radius: 2px;
-      transition: var(--transition);
-    }
-    nav.scrolled .hamburger span { background: var(--navy); }
-
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 70px; left: 0; right: 0;
-      background: var(--white);
-      padding: 24px;
-      box-shadow: var(--shadow-lg);
-      z-index: 998;
-    }
-    .mobile-menu.open { display: block; }
-    .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-    .mobile-menu a { font-weight: 500; color: var(--navy); text-decoration: none; font-size: 1rem; }
-    .mobile-menu a:hover { color: var(--green-dark); }
-    .mobile-menu .btn { width: 100%; justify-content: center; margin-top: 8px; }
-
-    /* ===================== HERO ===================== */
-    #hero {
-      min-height: 100vh;
-      background: var(--navy);
-      position: relative;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    .hero-mesh {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .hero-mesh::before {
-      content: '';
-      position: absolute;
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(120,192,168,0.18) 0%, transparent 70%);
-      top: -200px; right: -200px;
-      border-radius: 50%;
-    }
-    .hero-mesh::after {
-      content: '';
-      position: absolute;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(120,192,168,0.10) 0%, transparent 70%);
-      bottom: -100px; left: -100px;
-      border-radius: 50%;
-    }
-
-    .hero-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(120,192,168,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(120,192,168,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 780px;
-    }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(120,192,168,0.15);
-      border: 1px solid rgba(120,192,168,0.30);
-      color: var(--green);
-      padding: 7px 16px;
-      border-radius: 100px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 28px;
-      font-family: var(--font-display);
-    }
-    .hero-badge::before { content: '●'; font-size: 0.5rem; animation: pulse-dot 2s ease-in-out infinite; }
-    @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(2.4rem, 6vw, 4.2rem);
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1.1;
-      margin-bottom: 24px;
-      letter-spacing: -0.02em;
-    }
-    .hero-title em {
-      font-style: normal;
-      color: var(--green);
-      position: relative;
-    }
-
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.2rem);
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 44px;
-      max-width: 580px;
-      line-height: 1.7;
-    }
-
-    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
-
-    .hero-stats {
-      display: flex;
-      gap: 40px;
-      margin-top: 64px;
-      padding-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.10);
-      flex-wrap: wrap;
-    }
-    .stat-item { }
-    .stat-num {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--green);
-      line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.50);
-      margin-top: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    /* ===================== SOBRE ===================== */
-    #sobre .sobre-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    .sobre-visual {
-      position: relative;
-    }
-    .sobre-card {
-      background: var(--navy);
-      border-radius: var(--radius);
-      padding: 48px 40px;
-      color: var(--white);
-      position: relative;
-      overflow: hidden;
-    }
-    .sobre-card::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, rgba(120,192,168,0.20) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-    .sobre-card-icon {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-    }
-    .sobre-card h3 {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-    .sobre-card p { color: rgba(255,255,255,0.65); font-size: 0.95rem; }
-
-    .sobre-float {
-      position: absolute;
-      bottom: -20px; right: -20px;
-      background: var(--green);
-      color: var(--white);
-      border-radius: var(--radius);
-      padding: 20px 24px;
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.9rem;
-      box-shadow: var(--shadow-lg);
-    }
-    .sobre-float span {
-      display: block;
-      font-size: 1.8rem;
-      font-weight: 800;
-    }
-
-    /* ===================== SERVIÇOS ===================== */
-    #servicos .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .service-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 40px 32px;
-      border: 1px solid var(--border);
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-    .service-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--green);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform var(--transition);
-    }
-    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
-    .service-card:hover::after { transform: scaleX(1); }
-
-    .service-icon {
-      width: 56px; height: 56px;
-      background: rgba(120,192,168,0.12);
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.6rem;
-      margin-bottom: 24px;
-    }
-    .service-card h3 {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 10px;
-    }
-    .service-card p { font-size: 0.93rem; color: var(--muted); line-height: 1.6; }
-
-    /* ===================== PLANOS ===================== */
-    #planos { background: var(--navy); }
-    #planos .tag { color: var(--green); background: rgba(120,192,168,0.12); border-color: rgba(120,192,168,0.25); }
-    #planos h2.section-title { color: var(--white); }
-    #planos .section-sub { color: rgba(255,255,255,0.55); }
-
-    .plans-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      align-items: start;
-    }
-
-    .plan-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: var(--radius);
-      padding: 40px 32px;
-      transition: var(--transition);
-      position: relative;
-      overflow: hidden;
-    }
-    .plan-card:hover {
-      background: rgba(255,255,255,0.08);
-      transform: translateY(-4px);
-    }
-    .plan-card.featured {
-      background: var(--white);
-      border-color: var(--green);
-      box-shadow: 0 0 0 2px var(--green), var(--shadow-lg);
-      transform: scale(1.02);
-    }
-    .plan-card.featured:hover { transform: scale(1.02) translateY(-4px); }
-
-    .plan-badge {
-      position: absolute;
-      top: 20px; right: 20px;
-      background: var(--green);
-      color: var(--white);
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 4px 12px;
-      border-radius: 100px;
-      font-family: var(--font-display);
-    }
-
-    .plan-name {
-      font-family: var(--font-display);
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--green);
-      margin-bottom: 12px;
-    }
-    .plan-card.featured .plan-name { color: var(--green-dark); }
-
-    .plan-title {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 20px;
-    }
-    .plan-card.featured .plan-title { color: var(--navy); }
-
-    .plan-price {
-      margin-bottom: 28px;
-      padding-bottom: 28px;
-      border-bottom: 1px solid rgba(255,255,255,0.10);
-    }
-    .plan-card.featured .plan-price { border-bottom-color: var(--border); }
-
-    .plan-price-main {
-      font-family: var(--font-display);
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1;
-    }
-    .plan-card.featured .plan-price-main { color: var(--navy); }
-
-    .plan-price-detail {
-      font-size: 0.83rem;
-      color: rgba(255,255,255,0.45);
-      margin-top: 4px;
-    }
-    .plan-card.featured .plan-price-detail { color: var(--muted); }
-
-    .plan-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-    .plan-features li {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.92rem;
-      color: rgba(255,255,255,0.70);
-    }
-    .plan-card.featured .plan-features li { color: var(--text); }
-    .plan-features li::before {
-      content: '✓';
-      width: 20px; height: 20px;
-      background: rgba(120,192,168,0.15);
-      color: var(--green);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .plan-btn {
-      display: flex; align-items: center; justify-content: center;
-      width: 100%;
-      padding: 15px;
-      border-radius: 100px;
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: var(--transition);
-      border: 2px solid rgba(255,255,255,0.20);
-      color: var(--white);
-      cursor: pointer;
-      background: transparent;
-    }
-    .plan-btn:hover {
-      background: rgba(255,255,255,0.10);
-      border-color: rgba(255,255,255,0.40);
-    }
-    .plan-card.featured .plan-btn {
-      background: var(--green);
-      border-color: var(--green);
-      color: var(--white);
-      box-shadow: 0 4px 20px rgba(120,192,168,0.40);
-    }
-    .plan-card.featured .plan-btn:hover {
-      background: var(--green-dark);
-      transform: translateY(-2px);
-    }
-
-    /* ===================== DIFERENCIAIS ===================== */
-    #diferenciais .diff-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 20px;
-    }
-
-    .diff-item {
-      text-align: center;
-      padding: 36px 20px;
-      background: var(--white);
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      transition: var(--transition);
-    }
-    .diff-item:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
-
-    .diff-icon {
-      font-size: 2.2rem;
-      margin-bottom: 16px;
-      display: block;
-    }
-    .diff-item h4 {
-      font-family: var(--font-display);
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--navy);
-    }
-
-    /* ===================== COMO FUNCIONA ===================== */
-    #como-funciona { background: var(--bg); }
-
-    .steps-wrap {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0;
-      position: relative;
-    }
-    .steps-wrap::before {
-      content: '';
-      position: absolute;
-      top: 36px; left: 60px; right: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--green) 0%, rgba(120,192,168,0.2) 100%);
-      z-index: 0;
-    }
-
-    .step {
-      text-align: center;
-      position: relative;
-      z-index: 1;
-      padding: 0 12px;
-    }
-
-    .step-num {
-      width: 72px; height: 72px;
-      background: var(--white);
-      border: 3px solid var(--green);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-display);
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--navy);
-      margin: 0 auto 20px;
-      transition: var(--transition);
-      box-shadow: 0 0 0 6px var(--bg);
-    }
-    .step:hover .step-num {
-      background: var(--green);
-      color: var(--white);
-      transform: scale(1.1);
-    }
-
-    .step h4 {
-      font-family: var(--font-display);
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 8px;
-    }
-    .step p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
-
-    /* ===================== FAQ ===================== */
-    #faq { background: var(--white); }
-
-    .faq-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .faq-item {
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: var(--transition);
-    }
-    .faq-item.open { box-shadow: var(--shadow); border-color: var(--green); }
-
-    .faq-q {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 22px 24px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      text-align: left;
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--navy);
-      transition: var(--transition);
-    }
-    .faq-q:hover { color: var(--green-dark); }
-
-    .faq-arrow {
-      width: 28px; height: 28px;
-      background: rgba(120,192,168,0.12);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: transform var(--transition), background var(--transition);
-    }
-    .faq-item.open .faq-arrow {
-      transform: rotate(180deg);
-      background: var(--green);
-    }
-    .faq-arrow svg { width: 14px; height: 14px; }
-    .faq-item.open .faq-arrow svg path { stroke: var(--white); }
-
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.35s cubic-bezier(.4,0,.2,1), padding 0.3s;
-    }
-    .faq-a-inner {
-      padding: 0 24px 22px;
-      font-size: 0.92rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-    .faq-item.open .faq-a { max-height: 200px; }
-
-    /* ===================== CTA FINAL ===================== */
-    #cta {
-      background: linear-gradient(135deg, var(--navy) 0%, #0d4e7a 60%, #0b3c5d 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    #cta::before {
-      content: '';
-      position: absolute;
-      top: -200px; right: -200px;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(120,192,168,0.15) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-
-    .cta-inner {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      max-width: 640px;
-      margin: 0 auto;
-    }
-    .cta-inner h2 {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 16px;
-      line-height: 1.15;
-    }
-    .cta-inner p {
-      color: rgba(255,255,255,0.60);
-      font-size: 1.05rem;
-      margin-bottom: 40px;
-    }
-    .cta-btn-big {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--green);
-      color: var(--white);
-      padding: 18px 40px;
-      border-radius: 100px;
-      font-family: var(--font-display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: var(--transition);
-      box-shadow: 0 8px 32px rgba(120,192,168,0.40);
-    }
-    .cta-btn-big:hover {
-      background: var(--green-dark);
-      transform: translateY(-3px);
-      box-shadow: 0 14px 40px rgba(120,192,168,0.50);
-    }
-
-    /* ===================== FOOTER ===================== */
-    footer {
-      background: #070f1a;
-      padding: 40px 0;
-      text-align: center;
-    }
-    footer .footer-logo {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 12px;
-    }
-    footer .footer-logo span { color: var(--green); }
-    footer p { color: rgba(255,255,255,0.30); font-size: 0.82rem; }
-
-    /* ===================== WHATSAPP FLOAT ===================== */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 28px; right: 28px;
-      z-index: 9999;
-      width: 58px; height: 58px;
-      background: #25D366;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 6px 24px rgba(37,211,102,0.50);
-      text-decoration: none;
-      transition: var(--transition);
-      animation: float-wa 3s ease-in-out infinite;
-    }
-    .whatsapp-float:hover { transform: scale(1.12); box-shadow: 0 10px 32px rgba(37,211,102,0.60); }
-    .whatsapp-float svg { width: 30px; height: 30px; }
-
-    @keyframes float-wa {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-6px); }
-    }
-    .whatsapp-float:hover { animation: none; }
-
-    .wa-pulse {
-      position: absolute;
-      inset: -6px;
-      border: 2px solid rgba(37,211,102,0.40);
-      border-radius: 50%;
-      animation: wa-ring 2.5s ease-out infinite;
-    }
-    @keyframes wa-ring {
-      0%   { transform: scale(1); opacity: 1; }
-      100% { transform: scale(1.5); opacity: 0; }
-    }
-
-    /* ===================== ANIMATIONS ===================== */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .delay-1 { transition-delay: 0.1s; }
-    .delay-2 { transition-delay: 0.2s; }
-    .delay-3 { transition-delay: 0.3s; }
-    .delay-4 { transition-delay: 0.4s; }
-
-    /* ===================== RESPONSIVE ===================== */
-    @media (max-width: 1024px) {
-      .sobre-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
-      .diff-grid { grid-template-columns: repeat(3, 1fr) !important; }
-      .steps-wrap { grid-template-columns: repeat(3, 1fr) !important; gap: 24px !important; }
-      .steps-wrap::before { display: none; }
-    }
-
-    @media (max-width: 768px) {
-      .section { padding: 72px 0; }
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      #servicos .cards-grid { grid-template-columns: 1fr !important; }
-      .plans-grid { grid-template-columns: 1fr !important; }
-      .plan-card.featured { transform: none; }
-      .diff-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      .steps-wrap { grid-template-columns: 1fr !important; }
-      .faq-grid { grid-template-columns: 1fr !important; }
-      .hero-stats { gap: 24px; }
-      .sobre-float { position: static; margin-top: 20px; display: inline-block; }
-    }
-
-    @media (max-width: 480px) {
-      .hero-btns { flex-direction: column; }
-      .hero-btns .btn { justify-content: center; }
-      .diff-grid { grid-template-columns: 1fr !important; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>YuPe Agência | Sites que transformam visitas em clientes</title>
+<meta name="description" content="Seu cliente pesquisa antes de comprar. Criamos sites, landing pages e lojas virtuais que explicam sua oferta, geram confiança e levam o cliente até o WhatsApp. Curitiba e região." />
+<meta name="author" content="YuPe Agência" />
+<meta name="language" content="pt-BR" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="geo.region" content="BR-PR" />
+<meta name="geo.placename" content="Curitiba, Paraná, Brasil" />
+<meta name="theme-color" content="#ffffff" />
+<link rel="canonical" href="https://yupeagencia.com.br/" />
+<link rel="icon" href="assets/logo-yupe.png" />
+
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:site_name" content="YuPe Agência" />
+<meta property="og:title" content="YuPe Agência | Sites que transformam visitas em clientes" />
+<meta property="og:description" content="Sites, landing pages e lojas virtuais com estratégia, design e código. Atendimento direto com quem faz." />
+<meta property="og:url" content="https://yupeagencia.com.br/" />
+<meta property="og:image" content="https://yupeagencia.com.br/assets/logo-yupe.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+
+<!-- ============================================
+     META PIXEL · YuPe Agência
+     ID: 1538909137732787
+
+     ATENÇÃO: o pixel NÃO é carregado aqui de propósito.
+     Ele só é injetado depois que o visitante aceita os cookies,
+     conforme a LGPD. A lógica está no script.js (carregarPixel).
+============================================ -->
 </head>
 <body>
 
-  <!-- ==================== NAVBAR ==================== -->
-  <nav id="navbar">
-    <div class="container">
-      <div class="nav-inner">
-        <a href="#hero" class="nav-logo">YuPe <span>Agência</span></a>
-        <ul class="nav-links">
-          <li><a href="#sobre">Sobre</a></li>
-          <li><a href="#servicos">Serviços</a></li>
-          <li><a href="#planos">Planos</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="https://wa.me/41995107048" target="_blank" class="nav-cta">Falar Agora</a></li>
-        </ul>
-        <button class="hamburger" id="hamburger" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
+<!-- ============================================
+     HEADER
+============================================ -->
+<header class="header" id="header">
+  <div class="header-inner">
+
+    <a href="#topo" class="brand" aria-label="YuPe Agência — início">
+      <span class="brand-word">Yu<span class="brand-pe">Pe</span><i class="brand-sq"></i></span>
+      <span class="brand-sub">Agência</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Menu principal">
+      <a href="#sobre"><span class="nav-n">01</span>Sobre</a>
+      <a href="#servicos"><span class="nav-n">02</span>Serviços</a>
+      <a href="#portfolio"><span class="nav-n">03</span>Portfólio</a>
+      <a href="#processo"><span class="nav-n">04</span>Processo</a>
+      <a href="#contato"><span class="nav-n">05</span>Contato</a>
+      <div class="nav-foot">
+        <a href="https://wa.me/5541995107048" class="nav-phone">(41) 99510-7048</a>
+        <a href="mailto:contato@yupeagencia.com.br" class="nav-mail">contato@yupeagencia.com.br</a>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <a href="#contato" class="btn btn-primary btn-sm" data-open-quiz>Quero meu site</a>
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="topo">
+
+  <!-- ============================================
+       HERO
+  ============================================ -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <p class="hero-eyebrow reveal"><i class="sq"></i>Seu cliente pesquisa antes de escolher</p>
+
+      <h1 class="hero-title reveal">
+        Seu negócio precisa de um site que <span class="hl">convença</span>.
+      </h1>
+
+      <p class="hero-lead reveal">
+        Rede social ajuda, mas o alcance é emprestado. Criamos sites, landing pages e lojas virtuais que explicam sua oferta, geram confiança e levam o cliente até o seu WhatsApp.
+      </p>
+
+      <div class="hero-cta reveal">
+        <a href="#contato" class="btn btn-primary btn-lg" data-open-quiz>Quero meu site <span class="arw">→</span></a>
+        <a href="#portfolio" class="btn btn-ghost btn-lg">Ver trabalhos</a>
+      </div>
+
+      <div class="hero-meta reveal">
+        <span class="hero-loc">Curitiba · PR · Brasil</span>
+        <span class="hero-scroll">Role para descer <i></i></span>
       </div>
     </div>
-  </nav>
+  </section>
 
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
-    <ul>
-      <li><a href="#sobre" onclick="closeMobile()">Sobre</a></li>
-      <li><a href="#servicos" onclick="closeMobile()">Serviços</a></li>
-      <li><a href="#planos" onclick="closeMobile()">Planos</a></li>
-      <li><a href="#faq" onclick="closeMobile()">FAQ</a></li>
-    </ul>
-    <a href="https://wa.me/41995107048" target="_blank" class="btn btn-primary" style="margin-top:16px;width:100%;justify-content:center;">💬 Falar no WhatsApp</a>
+  <!-- ============================================
+       MARQUEE
+  ============================================ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-group">
+        <span>Mais confiança</span><i>✦</i>
+        <span>Presença no Google</span><i>✦</i>
+        <span>Oferta clara</span><i>✦</i>
+        <span>Site rápido</span><i>✦</i>
+        <span>Mais contatos</span><i>✦</i>
+        <span>Marca profissional</span><i>✦</i>
+        <span>Pronto pra anúncio</span><i>✦</i>
+      </span>
+      <span class="marquee-group">
+        <span>Mais confiança</span><i>✦</i>
+        <span>Presença no Google</span><i>✦</i>
+        <span>Oferta clara</span><i>✦</i>
+        <span>Site rápido</span><i>✦</i>
+        <span>Mais contatos</span><i>✦</i>
+        <span>Marca profissional</span><i>✦</i>
+        <span>Pronto pra anúncio</span><i>✦</i>
+      </span>
+    </div>
   </div>
 
-  <!-- ==================== HERO ==================== -->
-  <section id="hero">
-    <div class="hero-mesh"></div>
-    <div class="hero-grid"></div>
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge">🚀 YuPe Agência</div>
-        <h1 class="hero-title">
-          Criação de Sites que<br /><em>Geram Clientes</em>
-        </h1>
-        <p class="hero-sub">
-          Landing Pages, Sites completos e E-commerces prontos para vender — rápido, estratégico e sem complicação.
+  <!-- ============================================
+       02 · PROBLEMA
+  ============================================ -->
+  <section class="problem" id="problema">
+    <div class="problem-inner">
+
+      <header class="problem-head">
+        <p class="label reveal"><i class="sq"></i>Antes de falar de projeto, entenda o problema</p>
+        <h2 class="problem-title reveal">A decisão acontece antes de você entrar na conversa.</h2>
+        <p class="problem-lead reveal">
+          Quem procura seu negócio hoje compara três opções em dois minutos. Se não encontra uma página clara, rápida e profissional, escolhe quem parece mais preparado. Nem sempre é quem trabalha melhor.
         </p>
-        <div class="hero-btns">
-          <a href="https://wa.me/41995107048" target="_blank" class="btn btn-primary">🚀 Solicitar Orçamento</a>
-          <a href="#planos" class="btn btn-outline-light">👀 Ver Planos</a>
-        </div>
-      </div>
+      </header>
+
+      <ol class="problem-list">
+
+        <li class="problem-item reveal">
+          <span class="problem-n">01</span>
+          <div class="problem-body">
+            <h3>Ninguém entende sua oferta em cinco segundos</h3>
+            <p>Se a mensagem não é direta, a pessoa fecha a aba e nem te avisa. A gente organiza sua oferta pra deixar claro quem você atende, por que confiar em você e como contratar.</p>
+          </div>
+        </li>
+
+        <li class="problem-item reveal">
+          <span class="problem-n">02</span>
+          <div class="problem-body">
+            <h3>Seu negócio mora em terreno alugado</h3>
+            <p>Rede social muda regra, alcance e formato quando quer, e você não é avisado. O site é a base que é sua: recebe anúncio, aparece na busca e apresenta seu negócio do seu jeito.</p>
+          </div>
+        </li>
+
+        <li class="problem-item reveal">
+          <span class="problem-n">03</span>
+          <div class="problem-body">
+            <h3>Visitam, olham e vão embora</h3>
+            <p>Interesse não vira contato sozinho. Texto certo, hierarquia clara, carregamento rápido e a chamada no lugar certo é o que transforma visita em conversa no WhatsApp.</p>
+          </div>
+        </li>
+
+      </ol>
+
     </div>
   </section>
 
-  <!-- ==================== SOBRE ==================== -->
-  <section id="sobre" class="section section-alt">
-    <div class="container">
-      <div class="sobre-grid">
+  <!-- ============================================
+       03 · PORTFÓLIO
+       Imagens em assets/imagens/ — desktop 16:10, celular 9:17
+  ============================================ -->
+  <section class="work" id="portfolio">
+    <div class="work-inner">
+
+      <header class="work-head">
+        <p class="label reveal"><i class="sq"></i>Trabalhos</p>
+        <h2 class="work-title reveal">Você não precisa imaginar o resultado.</h2>
+        <p class="work-lead reveal">
+          Projeto real no ar e modelos que desenvolvemos. Visual profissional, navegação responsiva e cada seção pensada pra fazer o visitante entender, confiar e chamar.
+        </p>
+      </header>
+
+      <div class="work-grid">
+
+        <!-- ATHENA — projeto real -->
+        <article class="work-card reveal">
+          <a href="https://www.athenatrend.com" target="_blank" rel="noopener" class="work-media">
+            <span class="work-badge"><i class="sq"></i>No ar agora</span>
+            <div class="mock">
+              <div class="mock-desk">
+                <span class="mock-bar"><i></i><i></i><i></i></span>
+                <div class="mock-screen">
+                  <img src="assets/imagens/athena.png" alt="Loja Athena Trend no computador" />
+                </div>
+              </div>
+              <div class="mock-phone">
+                <img src="assets/imagens/athena-mobile.png" alt="Loja Athena Trend no celular" />
+              </div>
+            </div>
+          </a>
+          <div class="work-info">
+            <div>
+              <span class="work-cat">E-commerce · Nuvemshop</span>
+              <h3 class="work-name">Athena Trend</h3>
+            </div>
+            <a href="https://www.athenatrend.com" target="_blank" rel="noopener" class="work-link">Ver projeto <span class="arw">↗</span></a>
+          </div>
+        </article>
+
+        <!-- MODELO — nutrição -->
+        <article class="work-card reveal">
+          <div class="work-media is-model">
+            <span class="work-badge is-model">Modelo</span>
+            <div class="mock">
+              <div class="mock-desk">
+                <span class="mock-bar"><i></i><i></i><i></i></span>
+                <div class="mock-screen">
+                  <img src="assets/imagens/nutri.png" alt="Modelo de landing page para nutricionista no computador" />
+                </div>
+              </div>
+              <div class="mock-phone">
+                <img src="assets/imagens/nutri-mobile.png" alt="Modelo de landing page para nutricionista no celular" />
+              </div>
+            </div>
+          </div>
+          <div class="work-info">
+            <div>
+              <span class="work-cat">Landing page · Nutrição</span>
+              <h3 class="work-name">Modelo de conversão</h3>
+            </div>
+          </div>
+        </article>
+
+        <!-- MODELO — designer -->
+        <article class="work-card reveal">
+          <div class="work-media is-model">
+            <span class="work-badge is-model">Modelo</span>
+            <div class="mock">
+              <div class="mock-desk">
+                <span class="mock-bar"><i></i><i></i><i></i></span>
+                <div class="mock-screen">
+                  <img src="assets/imagens/designer.png" alt="Modelo de site para designer de interiores no computador" />
+                </div>
+              </div>
+              <div class="mock-phone">
+                <img src="assets/imagens/designer-mobile.png" alt="Modelo de site para designer de interiores no celular" />
+              </div>
+            </div>
+          </div>
+          <div class="work-info">
+            <div>
+              <span class="work-cat">Site · Design de interiores</span>
+              <h3 class="work-name">Modelo de portfólio</h3>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="work-note reveal">
+        Os itens marcados como modelo são projetos que desenvolvemos para demonstrar padrão de entrega.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ============================================
+       04 · SOBRE
+       Foto: assets/imagens/marcelo.png
+  ============================================ -->
+  <section class="about" id="sobre">
+    <div class="about-inner">
+
+      <div class="about-media reveal">
+        <div class="about-photo">
+          <img src="assets/imagens/marcelo.png" alt="Marcelo, fundador da YuPe Agência" />
+        </div>
+        <span class="about-status"><i class="dot"></i>Curitiba · PR · Disponível</span>
+        <i class="about-sq" aria-hidden="true"></i>
+      </div>
+
+      <div class="about-body">
+        <p class="label reveal"><i class="sq"></i>Sobre</p>
+
+        <h2 class="about-title reveal">Seu site trabalha por você quando você não está na conversa.</h2>
+
+        <p class="about-txt reveal">
+          É ele que responde a primeira dúvida, mostra que o seu negócio é sério e leva a pessoa até o contato. Tudo isso antes de você digitar a primeira mensagem.
+        </p>
+
+        <p class="about-txt reveal">
+          A YuPe é tocada por duas pessoas. Eu cuido de tecnologia, desenvolvimento e estratégia de conversão. A Giovana cuida da gestão, do relacionamento e da operação. Não existe fila de atendimento nem intermediário: você fala com quem faz, do briefing até o site no ar.
+        </p>
+
+        <p class="about-txt reveal">
+          Cada seção do que a gente entrega existe pra responder uma dúvida, quebrar uma objeção ou empurrar pro próximo passo. Sem página genérica, sem texto de encher linguiça.
+        </p>
+
+        <ul class="about-tags reveal">
+          <li>Sites institucionais</li>
+          <li>Landing pages</li>
+          <li>E-commerce</li>
+          <li>Apps mobile</li>
+          <li>UI/UX</li>
+          <li>SEO</li>
+          <li>Manutenção</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================
+       05 · SERVIÇOS
+       data-service alimenta o passo 1 do quiz (bloco 08)
+  ============================================ -->
+  <section class="services" id="servicos">
+    <div class="services-inner">
+
+      <header class="services-head">
         <div>
-          <div class="tag">Sobre a Agência</div>
-          <h2 class="section-title">Presença digital que<br />gera resultado real</h2>
-          <p style="color:var(--muted);margin-bottom:24px;font-size:1.02rem;line-height:1.75;">
-            Somos uma agência focada em criação de sites estratégicos, com foco em resultado. Desenvolvemos Landing Pages, sites completos e estruturamos e-commerces na Nuvemshop para empresas que querem crescer no digital de forma profissional.
-          </p>
-          <p style="color:var(--muted);font-size:1.02rem;line-height:1.75;">
-            Cada projeto é tratado de forma personalizada, do briefing ao lançamento, com suporte direto e sem intermediários.
-          </p>
-          <a href="https://wa.me/41995107048" target="_blank" class="btn btn-primary" style="margin-top:32px;">Falar com a equipe</a>
+          <p class="label reveal"><i class="sq"></i>Serviços</p>
+          <h2 class="services-title reveal">O que a gente constrói.</h2>
         </div>
-        <div class="sobre-visual fade-up">
-          <div class="sobre-card">
-            <div class="sobre-card-icon">💡</div>
-            <h3>Estratégia + Design + Código</h3>
-            <p>Não entregamos apenas um site bonito. Entregamos uma ferramenta de vendas pensada para o seu negócio, com estratégia de conversão desde o primeiro pixel.</p>
-          </div>
-          <div class="sobre-float">
-          </div>
-        </div>
+        <p class="services-lead reveal">
+          Escolha por onde começar. A gente monta o orçamento depois de entender seu negócio, não antes.
+        </p>
+      </header>
+
+      <div class="services-grid">
+
+        <button class="service reveal" data-open-quiz data-service="Site institucional">
+          <span class="service-n">01</span>
+          <h3>Site institucional</h3>
+          <p>A casa do seu negócio na internet. Várias páginas, estrutura profissional e presença que sustenta autoridade.</p>
+          <span class="service-tags"><i>Páginas</i><i>Responsivo</i><i>Domínio</i></span>
+          <span class="service-go">Pedir orçamento <span class="arw">→</span></span>
+        </button>
+
+        <button class="service reveal" data-open-quiz data-service="Landing page">
+          <span class="service-n">02</span>
+          <h3>Landing page</h3>
+          <p>Página única com um objetivo só: converter. Ideal pra receber anúncio e transformar clique em contato.</p>
+          <span class="service-tags"><i>Alta conversão</i><i>WhatsApp</i><i>Pronta pra tráfego</i></span>
+          <span class="service-go">Pedir orçamento <span class="arw">→</span></span>
+        </button>
+
+        <button class="service reveal" data-open-quiz data-service="Loja virtual">
+          <span class="service-n">03</span>
+          <h3>Loja virtual</h3>
+          <p>E-commerce completo na Nuvemshop, do catálogo ao pagamento. É o que a gente já opera na Athena Trend.</p>
+          <span class="service-tags"><i>Nuvemshop</i><i>Catálogo</i><i>Checkout</i></span>
+          <span class="service-go">Pedir orçamento <span class="arw">→</span></span>
+        </button>
+
+        <button class="service reveal" data-open-quiz data-service="Aplicativo mobile">
+          <span class="service-n">04</span>
+          <h3>Aplicativo mobile</h3>
+          <p>App pra Android e iOS quando o seu negócio precisa de mais que um site. Escopo desenhado junto com você.</p>
+          <span class="service-tags"><i>Android</i><i>iOS</i><i>Sob medida</i></span>
+          <span class="service-go">Pedir orçamento <span class="arw">→</span></span>
+        </button>
+
+        <button class="service reveal" data-open-quiz data-service="Gestão de redes sociais">
+          <span class="service-n">05</span>
+          <h3>Gestão de redes sociais</h3>
+          <p>Conteúdo e presença de marca com estratégia por trás de cada post. Seu perfil trabalhando, não só publicando.</p>
+          <span class="service-tags"><i>Instagram</i><i>Planejamento</i><i>Conteúdo</i></span>
+          <span class="service-go">Pedir orçamento <span class="arw">→</span></span>
+        </button>
+
+        <button class="service reveal" data-open-quiz data-service="Tráfego pago">
+          <span class="service-n">06</span>
+          <h3>Tráfego pago</h3>
+          <p>Campanhas no Meta Ads pra gerar contato qualificado. Verba acompanhada de perto e custo por lead na mesa.</p>
+          <span class="service-tags"><i>Meta Ads</i><i>Geração de leads</i><i>Relatório</i></span>
+          <span class="service-go">Pedir orçamento <span class="arw">→</span></span>
+        </button>
+
+        <button class="service reveal" data-open-quiz data-service="Google e SEO">
+          <span class="service-n">07</span>
+          <h3>Google e SEO</h3>
+          <p>Aparecer quando procuram pelo que você faz na sua região. Perfil no Google e site preparado pra busca.</p>
+          <span class="service-tags"><i>Google Meu Negócio</i><i>Busca local</i></span>
+          <span class="service-go">Pedir orçamento <span class="arw">→</span></span>
+        </button>
+
+        <button class="service reveal" data-open-quiz data-service="Manutenção">
+          <span class="service-n">08</span>
+          <h3>Manutenção</h3>
+          <p>Seu site no ar, atualizado e com alterações quando precisar. Suporte direto, sem abrir chamado pra ninguém.</p>
+          <span class="service-tags"><i>Hospedagem</i><i>Alterações</i><i>Suporte</i></span>
+          <span class="service-go">Pedir orçamento <span class="arw">→</span></span>
+        </button>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================
+       06 · PROCESSO
+  ============================================ -->
+  <section class="process" id="processo">
+    <div class="process-inner">
+
+      <header class="process-head">
+        <p class="label is-light reveal"><i class="sq"></i>Como funciona</p>
+        <h2 class="process-title reveal">Processo claro. Sem surpresa no meio do caminho.</h2>
+        <p class="process-lead reveal">
+          Você sabe em que etapa está, o que vem depois e o que precisa da sua parte. Nada avança sem a sua aprovação.
+        </p>
+      </header>
+
+      <ol class="timeline">
+
+        <li class="tl-step reveal">
+          <span class="tl-node"><i></i></span>
+          <span class="tl-n">01</span>
+          <h3>Briefing</h3>
+          <p>A gente senta com você pra entender o negócio, o público e o objetivo. Daqui sai o escopo certo, não um projeto genérico.</p>
+        </li>
+
+        <li class="tl-step reveal">
+          <span class="tl-node"><i></i></span>
+          <span class="tl-n">02</span>
+          <h3>Estratégia e design</h3>
+          <p>Estruturamos a experiência, o texto e o visual pra pessoa entender rápido e achar o próximo passo. Você aprova antes de virar código.</p>
+        </li>
+
+        <li class="tl-step reveal">
+          <span class="tl-node"><i></i></span>
+          <span class="tl-n">03</span>
+          <h3>Desenvolvimento</h3>
+          <p>Construímos do zero: rápido no celular, responsivo e preparado pra receber tráfego de Google e de anúncio.</p>
+        </li>
+
+        <li class="tl-step reveal">
+          <span class="tl-node"><i></i></span>
+          <span class="tl-n">04</span>
+          <h3>Entrega e acompanhamento</h3>
+          <p>Colocamos no ar, conectamos os canais de contato e seguimos junto. Seu projeto começa a trabalhar por você.</p>
+        </li>
+
+      </ol>
+
+    </div>
+  </section>
+
+  <!-- ============================================
+       07 · CUSTO DE ADIAR
+  ============================================ -->
+  <section class="cost" id="contato">
+    <div class="cost-inner">
+      <p class="label reveal"><i class="sq"></i>O custo de adiar</p>
+
+      <h2 class="cost-title reveal">
+        O que você perde enquanto decide <span class="hl">não aparece em lugar nenhum</span>.
+      </h2>
+
+      <p class="cost-txt reveal">
+        Ninguém te avisa que procurou seu nome, não achou nada sólido e chamou o concorrente. Essa venda não vira reclamação nem feedback. Ela simplesmente não acontece, e o prejuízo fica invisível no fim do mês.
+      </p>
+
+      <div class="cost-cta reveal">
+        <button class="btn btn-primary btn-lg" data-open-quiz>Quero parar de perder essas oportunidades <span class="arw">→</span></button>
+        <span class="cost-note">Leva 30 segundos e você fala direto com quem faz</span>
       </div>
     </div>
   </section>
 
-  <!-- ==================== SERVIÇOS ==================== -->
-  <section id="servicos" class="section">
-    <div class="container">
-      <div class="tag">O que fazemos</div>
-      <h2 class="section-title">Nossos Serviços</h2>
-      <p class="section-sub">Soluções digitais pensadas para cada momento da sua jornada no digital.</p>
+</main>
 
-      <div class="cards-grid">
-        <div class="service-card fade-up">
-          <div class="service-icon">⚡</div>
-          <h3>Landing Page</h3>
-          <p>Página única focada em conversão, ideal para quem quer validar e começar rápido. Pronta em poucos dias, com tudo que você precisa para captar clientes.</p>
-        </div>
-        <div class="service-card fade-up delay-1">
-          <div class="service-icon">🏢</div>
-          <h3>Site Completo</h3>
-          <p>Estrutura profissional com múltiplas páginas para empresas que querem presença forte e autoridade no digital. Design personalizado do zero.</p>
-        </div>
-        <div class="service-card fade-up delay-2">
-          <div class="service-icon">🛒</div>
-          <h3>E-commerce (Nuvemshop)</h3>
-          <p>Criação e estruturação de lojas virtuais prontas para vender. Configuração completa, produtos, meios de pagamento e muito mais.</p>
-        </div>
+<!-- ============================================
+     FOOTER (provisório — refinado no bloco final)
+============================================ -->
+<footer class="footer">
+  <div class="footer-inner">
+
+    <div class="footer-top">
+      <div class="footer-cta">
+        <p class="label is-light"><i class="sq"></i>Próximo passo</p>
+        <h2 class="footer-h">Vamos tirar seu projeto do papel?</h2>
+        <p class="footer-sub">Responde cinco perguntas rápidas e a gente já volta com o caminho certo pro seu momento.</p>
+      </div>
+      <div class="footer-act">
+        <button class="btn btn-light btn-lg" data-open-quiz>Começar agora <span class="arw">→</span></button>
+        <a href="https://wa.me/5541995107048" class="footer-zap">ou chame direto no WhatsApp</a>
       </div>
     </div>
-  </section>
 
-  <!-- ==================== PLANOS ==================== -->
-  <section id="planos" class="section">
-    <div class="container">
-      <div class="tag">Investimento</div>
-      <h2 class="section-title">Escolha seu plano</h2>
-      <p class="section-sub">Planos flexíveis para empresas de todos os tamanhos. Sem surpresas, sem letras miúdas.</p>
+    <div class="footer-cols">
 
-      <div class="plans-grid">
-        <!-- START -->
-          <div class="plan-card fade-up">
-          <div class="plan-title">Site Completo</div>
-          <div class="plan-price">
-            <div class="plan-price-main">R$ 2.997</div>
-            <div class="plan-price-detail">Até 12x no cartão Sem Juros</div>
-            <div class="plan-price-detail">Recorrência a partir de 49,90</div>
-          </div>
-          <ul class="plan-features">
-            <li>Múltiplas páginas</li>
-            <li>Estrutura completa</li>
-            <li>Design personalizado</li>
-            <li>100% responsivo</li>
-            <li>Entrega em 15 a 30 dias úteis</li>
-          </ul>
-          <a href="https://wa.me/41995107048?text=Olá! Tenho interesse no plano PRO." target="_blank" class="plan-btn">Quero esse plano</a>
-        </div>
-          <!-- PRO -->
-        <div class="plan-card featured fade-up delay-1">
-          <div class="plan-badge">Mais popular</div>
-          <div class="plan-title">Landing Page</div>
-          <div class="plan-price">
-            <div class="plan-price-main">R$ 997</div>
-            <div class="plan-price-detail">Até 12x no cartão Sem Juros</div>
-            <div class="plan-price-detail">Recorrência a partir de 49,90 </div>
-          </div>
-          <ul class="plan-features">
-            <li>1 página estratégica</li>
-            <li>100% responsivo</li>
-            <li>Botão WhatsApp integrado</li>
-            <li>Domínio incluso</li>
-            <li>Manutenção E Suporte</li>
-            <li>Entrega em 2 a 5 dias úteis</li>
-          </ul>
-          <a href="https://wa.me/41995107048?text=Olá! Tenho interesse no plano START." target="_blank" class="plan-btn">Quero esse plano</a>
-        </div>
-        <!-- PRO+ -->
-        <div class="plan-card fade-up delay-2">
-          <div class="plan-title">E-Commerce com NuvemShop</div>
-          <div class="plan-price">
-            <div class="plan-price-main">R$ 2.997</div>
-            <div class="plan-price-detail"> + R$ 199/mês</div>
-            <div class="plan-price-detail">Até 12x no cartão Sem Juros</div>
-
-          </div>
-          <ul class="plan-features">
-            <li>Tudo do plano PRO</li>
-            <li>Manutenção mensal</li>
-            <li>Suporte prioritário</li>
-            <li>Backup + segurança</li>
-            <li>Domínio incluso</li>
-          </ul>
-          <a href="https://wa.me/41995107048?text=Olá! Tenho interesse no plano PRO+." target="_blank" class="plan-btn">Quero esse plano</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== DIFERENCIAIS ==================== -->
-  <section id="diferenciais" class="section section-alt">
-    <div class="container">
-      <div class="tag">Por que a gente</div>
-      <h2 class="section-title">Nossos Diferenciais</h2>
-      <p class="section-sub">Mais do que entregar sites — entregamos resultados.</p>
-
-      <div class="diff-grid">
-        <div class="diff-item fade-up">
-          <span class="diff-icon">⚡</span>
-          <h4>Entrega Rápida</h4>
-        </div>
-        <div class="diff-item fade-up delay-1">
-          <span class="diff-icon">📱</span>
-          <h4>100% Responsivo</h4>
-        </div>
-        <div class="diff-item fade-up delay-2">
-          <span class="diff-icon">🎯</span>
-          <h4>Foco em Conversão</h4>
-        </div>
-        <div class="diff-item fade-up delay-3">
-          <span class="diff-icon">🤝</span>
-          <h4>Suporte Direto</h4>
-        </div>
-        <div class="diff-item fade-up delay-4">
-          <span class="diff-icon">🔒</span>
-          <h4>Segurança e Estabilidade</h4>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== COMO FUNCIONA ==================== -->
-  <section id="como-funciona" class="section">
-    <div class="container">
-      <div class="tag">Processo</div>
-      <h2 class="section-title">Como Funciona</h2>
-      <p class="section-sub">Do primeiro contato ao site no ar, com total transparência em cada etapa.</p>
-
-      <div class="steps-wrap">
-        <div class="step fade-up">
-          <div class="step-num">1</div>
-          <h4>Você entra em contato</h4>
-          <p>Fale com a gente pelo WhatsApp e conte sobre o seu projeto.</p>
-        </div>
-        <div class="step fade-up delay-1">
-          <div class="step-num">2</div>
-          <h4>Entendemos seu objetivo</h4>
-          <p>Fazemos um briefing completo para entender sua empresa e metas.</p>
-        </div>
-        <div class="step fade-up delay-2">
-          <div class="step-num">3</div>
-          <h4>Criamos o layout</h4>
-          <p>Desenvolvemos o design personalizado para aprovação.</p>
-        </div>
-        <div class="step fade-up delay-3">
-          <div class="step-num">4</div>
-          <h4>Desenvolvemos o site</h4>
-          <p>Codificamos tudo com qualidade e responsividade.</p>
-        </div>
-        <div class="step fade-up delay-4">
-          <div class="step-num">5</div>
-          <h4>Publicamos no ar</h4>
-          <p>Seu site vai ao ar e começa a trabalhar por você.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== FAQ ==================== -->
-  <section id="faq" class="section section-alt">
-    <div class="container">
-      <div class="tag">Dúvidas</div>
-      <h2 class="section-title">Perguntas Frequentes</h2>
-      <p class="section-sub">Tudo que você precisa saber antes de começar.</p>
-
-      <div class="faq-grid">
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Em quanto tempo meu site fica pronto?
-            <span class="faq-arrow">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Landing Page: de 2 a 5 dias úteis. Site completo: de 15 a 30 dias úteis. O prazo começa a contar após o briefing e aprovação do layout.</div></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            O domínio está incluso?
-            <span class="faq-arrow">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Sim! O domínio está incluso em Todos os pacotes</div></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Posso pedir alterações?
-            <span class="faq-arrow">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Sim! Nos planos de recorrência, você pode solicitar alterações no seu site a partir do plano de R$97,90, que já inclui 1 modificação mensal. Para maior flexibilidade, o plano de R$297,90 oferece alterações ilimitadas e melhorias contínuas.</div></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Vocês fazem loja virtual?
-            <span class="faq-arrow">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Sim! Trabalhamos com a Nuvemshop para criação e estruturação de lojas virtuais completas, com configuração de produtos, meios de pagamento e personalização do layout.</div></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Preciso pagar mensalidade?
-            <span class="faq-arrow">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Sim. Todos os planos são mensais e já incluem hospedagem e domínio. Os valores variam de acordo com o plano escolhido e podem incluir também suporte e alterações recorrentes no site.</div></div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-q" onclick="toggleFaq(this)">
-            Como é feito o pagamento?
-            <span class="faq-arrow">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#0b3c5d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </button>
-          <div class="faq-a"><div class="faq-a-inner">Aceitamos Pix, Boleto e parcelamento no cartão em até 12x Sem Juros</div></div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== CTA FINAL ==================== -->
-  <section id="cta" class="section">
-    <div class="container">
-      <div class="cta-inner">
-        <div class="tag" style="color:var(--green);">Vamos começar?</div>
-        <h2>Pronto para ter um site profissional?</h2>
-        <p>Fale com a gente agora e comece seu projeto hoje mesmo. Atendimento ágil, sem enrolação.</p>
-        <a href="https://wa.me/41995107048" target="_blank" class="cta-btn-big">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.003 2C6.485 2 2.003 6.483 2.003 12c0 1.848.49 3.61 1.37 5.139L2 22l4.979-1.35A9.954 9.954 0 0012.003 22c5.514 0 9.997-4.483 9.997-10S17.517 2 12.003 2zm0 18.077a8.02 8.02 0 01-4.115-1.135l-.296-.175-3.01.815.82-2.974-.193-.307A8.036 8.036 0 013.98 12c0-4.428 3.601-8.03 8.022-8.03 4.42 0 8.022 3.602 8.022 8.03 0 4.428-3.602 8.077-8.021 8.077z"/></svg>
-          👉 Falar no WhatsApp
+      <div class="footer-brand">
+        <a href="#topo" class="brand">
+          <span class="brand-word">Yu<span class="brand-pe">Pe</span><i class="brand-sq"></i></span>
+          <span class="brand-sub">Agência</span>
         </a>
+        <p>Sites, lojas virtuais, mídia e tráfego para negócios que querem crescer. Atendimento direto com quem faz.</p>
       </div>
+
+      <nav class="footer-col" aria-label="Navegação do rodapé">
+        <span class="footer-t">Navegação</span>
+        <a href="#sobre">Sobre</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#portfolio">Portfólio</a>
+        <a href="#processo">Processo</a>
+      </nav>
+
+      <div class="footer-col">
+        <span class="footer-t">Serviços</span>
+        <button type="button" data-open-quiz data-service="Site institucional">Sites</button>
+        <button type="button" data-open-quiz data-service="Landing page">Landing pages</button>
+        <button type="button" data-open-quiz data-service="Loja virtual">Lojas virtuais</button>
+        <button type="button" data-open-quiz data-service="Tráfego pago">Tráfego pago</button>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-t">Contato</span>
+        <a href="https://wa.me/5541995107048" class="footer-strong">(41) 99510-7048</a>
+        <a href="mailto:contato@yupeagencia.com.br">contato@yupeagencia.com.br</a>
+
+        <div class="footer-social">
+          <a href="https://www.instagram.com/yupeagencia" target="_blank" rel="noopener" class="social" aria-label="Instagram da YuPe Agência" title="@yupeagencia">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5.5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
     </div>
-  </section>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer>
-    <div class="container">
-      <div class="footer-logo">YuPe <span>Agência</span></div>
-      <p>© 2026 YuPe Agência. Todos os direitos reservados.</p>
+    <div class="footer-base">
+      <span>© 2026 YuPe Agência · CNPJ 53.511.893/0001-04</span>
+      <span class="footer-loc">Curitiba · PR · Brasil</span>
+      <span class="footer-legal">
+        <a href="politica-privacidade.html">Política de privacidade</a>
+        <button type="button" id="rever-cookies">Preferências de cookies</button>
+      </span>
     </div>
-  </footer>
 
-  <!-- ==================== WHATSAPP FLOAT ==================== -->
-  <a href="https://wa.me/41995107048" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
-    <div class="wa-pulse"></div>
-    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.003 2C6.485 2 2.003 6.483 2.003 12c0 1.848.49 3.61 1.37 5.139L2 22l4.979-1.35A9.954 9.954 0 0012.003 22c5.514 0 9.997-4.483 9.997-10S17.517 2 12.003 2zm0 18.077a8.02 8.02 0 01-4.115-1.135l-.296-.175-3.01.815.82-2.974-.193-.307A8.036 8.036 0 013.98 12c0-4.428 3.601-8.03 8.022-8.03 4.42 0 8.022 3.602 8.022 8.03 0 4.428-3.602 8.077-8.021 8.077z"/></svg>
-  </a>
+  </div>
+</footer>
 
-  <!-- ==================== SCRIPTS ==================== -->
-  <script>
-    /* --- Navbar scroll --- */
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 40);
-    });
+  <!-- ============================================
+       08 · QUIZ DE QUALIFICAÇÃO (modal)
+  ============================================ -->
+  <div class="quiz" id="quiz" role="dialog" aria-modal="true" aria-labelledby="quiz-title" hidden>
+    <div class="quiz-backdrop" data-close-quiz></div>
 
-    /* --- Mobile menu --- */
-    const hamburger = document.getElementById('hamburger');
-    const mobileMenu = document.getElementById('mobileMenu');
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-    });
-    function closeMobile() { mobileMenu.classList.remove('open'); }
+    <div class="quiz-panel" role="document">
 
-    /* --- FAQ accordion --- */
-    function toggleFaq(btn) {
-      const item = btn.closest('.faq-item');
-      const isOpen = item.classList.contains('open');
-      // Close all
-      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
-      // Toggle clicked
-      if (!isOpen) item.classList.add('open');
-    }
+      <button class="quiz-close" data-close-quiz aria-label="Fechar">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
 
-    /* --- Scroll animations --- */
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
+      <header class="quiz-head">
+        <p class="label"><i class="sq"></i>Diagnóstico rápido</p>
+        <h2 id="quiz-title">Vamos entender seu projeto</h2>
+        <div class="quiz-meter">
+          <div class="quiz-track"><span id="quiz-bar"></span></div>
+          <span class="quiz-count"><b id="quiz-cur">01</b> / 05</span>
+        </div>
+      </header>
 
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+      <div class="quiz-body" id="quiz-body">
 
-    /* --- Smooth anchor scroll with offset for fixed nav --- */
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const href = a.getAttribute('href');
-        if (href === '#') return;
-        const target = document.querySelector(href);
-        if (!target) return;
-        e.preventDefault();
-        const offset = 80;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: 'smooth' });
-        closeMobile();
-      });
-    });
-  </script>
+        <!-- passo 1 -->
+        <section class="qstep is-active" data-step="1">
+          <h3 class="qstep-q">O que seu negócio precisa agora?</h3>
+          <div class="qopts" data-field="servico">
+            <button type="button" class="qopt" data-value="Site institucional">Site institucional</button>
+            <button type="button" class="qopt" data-value="Landing page">Landing page</button>
+            <button type="button" class="qopt" data-value="Loja virtual">Loja virtual</button>
+            <button type="button" class="qopt" data-value="Aplicativo mobile">Aplicativo mobile</button>
+            <button type="button" class="qopt" data-value="Gestão de redes sociais">Gestão de redes sociais</button>
+            <button type="button" class="qopt" data-value="Tráfego pago">Tráfego pago</button>
+            <button type="button" class="qopt" data-value="Google e SEO">Google e SEO</button>
+            <button type="button" class="qopt" data-value="Manutenção">Manutenção</button>
+            <button type="button" class="qopt" data-value="Ainda não sei">Ainda não sei</button>
+          </div>
+        </section>
+
+        <!-- passo 2 -->
+        <section class="qstep" data-step="2">
+          <h3 class="qstep-q">Qual resultado esse projeto precisa gerar?</h3>
+          <div class="qopts" data-field="objetivo">
+            <button type="button" class="qopt" data-value="Gerar contatos">Gerar contatos</button>
+            <button type="button" class="qopt" data-value="Vender online">Vender online</button>
+            <button type="button" class="qopt" data-value="Apresentar a empresa">Apresentar a empresa</button>
+            <button type="button" class="qopt" data-value="Lançar um produto">Lançar um produto</button>
+            <button type="button" class="qopt" data-value="Melhorar o que já existe">Melhorar o que já existe</button>
+          </div>
+        </section>
+
+        <!-- passo 3 -->
+        <section class="qstep" data-step="3">
+          <h3 class="qstep-q">Em que ponto você está hoje?</h3>
+          <div class="qopts" data-field="momento">
+            <button type="button" class="qopt" data-value="Só tenho a ideia">Só tenho a ideia</button>
+            <button type="button" class="qopt" data-value="Tenho textos e referências">Tenho textos e referências</button>
+            <button type="button" class="qopt" data-value="Tenho identidade visual">Tenho identidade visual</button>
+            <button type="button" class="qopt" data-value="Já tenho site no ar">Já tenho site no ar</button>
+          </div>
+        </section>
+
+        <!-- passo 4 -->
+        <section class="qstep" data-step="4">
+          <h3 class="qstep-q">Quando você quer colocar isso pra funcionar?</h3>
+          <div class="qopts is-tight" data-field="prazo">
+            <button type="button" class="qopt" data-value="O quanto antes">O quanto antes</button>
+            <button type="button" class="qopt" data-value="Em até 15 dias">Em até 15 dias</button>
+            <button type="button" class="qopt" data-value="Em até 30 dias">Em até 30 dias</button>
+            <button type="button" class="qopt" data-value="Sem pressa, planejando">Sem pressa, planejando</button>
+          </div>
+
+          <h3 class="qstep-q is-second">Qual investimento você tem previsto?</h3>
+          <div class="qopts is-tight" data-field="verba">
+            <button type="button" class="qopt" data-value="Até R$ 1.000">Até R$ 1.000</button>
+            <button type="button" class="qopt" data-value="R$ 1.000 a R$ 3.000">R$ 1.000 a R$ 3.000</button>
+            <button type="button" class="qopt" data-value="R$ 3.000 a R$ 6.000">R$ 3.000 a R$ 6.000</button>
+            <button type="button" class="qopt" data-value="Acima de R$ 6.000">Acima de R$ 6.000</button>
+            <button type="button" class="qopt" data-value="Ainda não defini">Ainda não defini</button>
+          </div>
+          <p class="qstep-help">Serve pra montar a proposta certa pro seu momento. Nenhum valor é fechado aqui.</p>
+        </section>
+
+        <!-- passo 5 -->
+        <section class="qstep" data-step="5">
+          <h3 class="qstep-q">Pra onde a gente manda o retorno?</h3>
+          <div class="qfields">
+            <div class="qfield">
+              <label for="q-nome">Seu nome</label>
+              <input type="text" id="q-nome" data-field="nome" placeholder="Como podemos te chamar" autocomplete="name" />
+            </div>
+            <div class="qfield">
+              <label for="q-zap">WhatsApp</label>
+              <input type="tel" id="q-zap" data-field="whatsapp" placeholder="(41) 9 9999-9999" autocomplete="tel" inputmode="tel" />
+            </div>
+            <div class="qfield">
+              <label for="q-empresa">Empresa ou projeto <span>opcional</span></label>
+              <input type="text" id="q-empresa" data-field="empresa" placeholder="Nome do seu negócio" autocomplete="organization" />
+            </div>
+            <div class="qfield">
+              <label for="q-msg">O que você vende <span>opcional</span></label>
+              <textarea id="q-msg" data-field="mensagem" rows="2" placeholder="Conte rapidamente o que seu negócio faz"></textarea>
+            </div>
+          </div>
+          <p class="qstep-err" id="quiz-err" hidden>Preencha seu nome e WhatsApp pra gente conseguir te responder.</p>
+        </section>
+
+      </div>
+
+      <footer class="quiz-foot">
+        <button type="button" class="btn btn-ghost btn-sm" id="quiz-back">Voltar</button>
+        <button type="button" class="btn btn-primary" id="quiz-next" disabled>Continuar <span class="arw">→</span></button>
+      </footer>
+
+    </div>
+  </div>
+
+<a href="https://wa.me/5541995107048" class="fab" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.7.9 3.7 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-4.9 1 1-4.8-.3-.4c-1-1.6-1.5-3.4-1.5-5.3C4.3 9.6 9.6 4.3 16 4.3S27.7 9.6 27.7 16 22.4 24.8 16 24.8zm6.5-8.3c-.4-.2-2.1-1-2.4-1.1-.3-.1-.6-.2-.8.2-.2.4-.9 1.1-1.1 1.3-.2.2-.4.2-.8.1-.4-.2-1.5-.6-2.9-1.8-1.1-1-1.8-2.2-2-2.6-.2-.4 0-.6.2-.8.2-.2.4-.4.5-.7.2-.2.2-.4.4-.7.1-.3 0-.5 0-.7-.1-.2-.8-2-1.1-2.7-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.5-.3.4-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.5 3.8 6 5.3.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 2.1-.9 2.4-1.7.3-.8.3-1.6.2-1.7-.1-.2-.3-.2-.7-.4z"/></svg>
+</a>
+
+<!-- ============================================
+     AVISO DE COOKIES (LGPD)
+============================================ -->
+<div class="cookies" id="cookies" hidden>
+  <div class="cookies-box">
+    <div class="cookies-txt">
+      <p class="cookies-t"><i class="sq"></i>Cookies e privacidade</p>
+      <p>
+        A gente usa cookies pra entender como você navega e melhorar a experiência.
+        Você escolhe: sem o aceite, nada de rastreamento é carregado.
+        Saiba mais na <a href="politica-privacidade.html">política de privacidade</a>.
+      </p>
+    </div>
+    <div class="cookies-acoes">
+      <button type="button" class="btn btn-ghost btn-sm" id="cookies-recusar">Recusar</button>
+      <button type="button" class="btn btn-primary btn-sm" id="cookies-aceitar">Aceitar</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
